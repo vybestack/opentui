@@ -1,6 +1,6 @@
-import { useKeyboard, useRenderer } from "@opentui/solid"
+import { useKeyboard, useRenderer } from "@vybestack/opentui-solid"
 import { createSignal, onMount } from "solid-js"
-import { bold, cyan, fg, t, type TextareaRenderable, type CursorStyleOptions } from "@opentui/core"
+import { bold, cyan, fg, t, type TextareaRenderable, type CursorStyleOptions } from "@vybestack/opentui-core"
 
 const initialContent = `Welcome to the TextareaRenderable Demo!
 

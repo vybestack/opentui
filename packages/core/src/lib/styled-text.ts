@@ -3,7 +3,7 @@ import type { TextBuffer, TextChunk } from "../text-buffer"
 import { createTextAttributes } from "../utils"
 import { parseColor, type ColorInput } from "./RGBA"
 
-const BrandedStyledText: unique symbol = Symbol.for("@opentui/core/StyledText")
+const BrandedStyledText: unique symbol = Symbol.for("@vybestack/opentui-core/StyledText")
 
 export type Color = ColorInput
 

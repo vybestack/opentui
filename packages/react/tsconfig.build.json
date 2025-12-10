@@ -10,12 +10,12 @@
     "types": ["bun", "node", "react"],
     "skipLibCheck": true,
     "jsx": "react-jsx",
-    "jsxImportSource": "@opentui/react",
+    "jsxImportSource": "@vybestack/opentui-react",
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@opentui/core": ["../core/dist"],
-      "@opentui/core/*": ["../core/dist/*"]
+      "@vybestack/opentui-core": ["../core/dist"],
+      "@vybestack/opentui-core/*": ["../core/dist/*"]
     }
   },
   "include": ["src/**/*", "jsx-runtime.d.ts", "jsx-dev-runtime.d.ts", "jsx-namespace.d.ts"],

@@ -65,7 +65,7 @@ const packagesText = includeVue ? "all packages" : "core, react, and solid packa
 console.log(`\nPreparing release ${version} for ${packagesText}...\n`)
 
 const corePackageJsonPath = join(rootDir, "packages", "core", "package.json")
-console.log("Updating @opentui/core...")
+console.log("Updating @vybestack/opentui-core...")
 
 try {
   const corePackageJson: PackageJson = JSON.parse(readFileSync(corePackageJsonPath, "utf8"))
@@ -74,7 +74,7 @@ try {
 
   if (corePackageJson.optionalDependencies) {
     for (const depName in corePackageJson.optionalDependencies) {
-      if (depName.startsWith("@opentui/core-")) {
+      if (depName.startsWith("@vybestack/opentui-core-")) {
         corePackageJson.optionalDependencies[depName] = version
         console.log(`  Updated ${depName} to ${version}`)
       }
@@ -82,14 +82,14 @@ try {
   }
 
   writeFileSync(corePackageJsonPath, JSON.stringify(corePackageJson, null, 2) + "\n")
-  console.log(`  @opentui/core updated to version ${version}`)
+  console.log(`  @vybestack/opentui-core updated to version ${version}`)
 } catch (error) {
-  console.error(`  Failed to update @opentui/core: ${error}`)
+  console.error(`  Failed to update @vybestack/opentui-core: ${error}`)
   process.exit(1)
 }
 
 const reactPackageJsonPath = join(rootDir, "packages", "react", "package.json")
-console.log("\nUpdating @opentui/react...")
+console.log("\nUpdating @vybestack/opentui-react...")
 
 try {
   const reactPackageJson: PackageJson = JSON.parse(readFileSync(reactPackageJsonPath, "utf8"))
@@ -97,15 +97,15 @@ try {
   reactPackageJson.version = version
 
   writeFileSync(reactPackageJsonPath, JSON.stringify(reactPackageJson, null, 2) + "\n")
-  console.log(`  @opentui/react updated to version ${version}`)
-  console.log(`  Note: @opentui/core dependency will be set to ${version} during build`)
+  console.log(`  @vybestack/opentui-react updated to version ${version}`)
+  console.log(`  Note: @vybestack/opentui-core dependency will be set to ${version} during build`)
 } catch (error) {
-  console.error(`  Failed to update @opentui/react: ${error}`)
+  console.error(`  Failed to update @vybestack/opentui-react: ${error}`)
   process.exit(1)
 }
 
 const solidPackageJsonPath = join(rootDir, "packages", "solid", "package.json")
-console.log("\nUpdating @opentui/solid...")
+console.log("\nUpdating @vybestack/opentui-solid...")
 
 try {
   const solidPackageJson: PackageJson = JSON.parse(readFileSync(solidPackageJsonPath, "utf8"))
@@ -113,16 +113,16 @@ try {
   solidPackageJson.version = version
 
   writeFileSync(solidPackageJsonPath, JSON.stringify(solidPackageJson, null, 2) + "\n")
-  console.log(`  @opentui/solid updated to version ${version}`)
-  console.log(`  Note: @opentui/core dependency will be set to ${version} during build`)
+  console.log(`  @vybestack/opentui-solid updated to version ${version}`)
+  console.log(`  Note: @vybestack/opentui-core dependency will be set to ${version} during build`)
 } catch (error) {
-  console.error(`  Failed to update @opentui/solid: ${error}`)
+  console.error(`  Failed to update @vybestack/opentui-solid: ${error}`)
   process.exit(1)
 }
 
 if (includeVue) {
   const vuePackageJsonPath = join(rootDir, "packages", "vue", "package.json")
-  console.log("\nUpdating @opentui/vue...")
+  console.log("\nUpdating @vybestack/opentui-vue...")
 
   try {
     const vuePackageJson: PackageJson = JSON.parse(readFileSync(vuePackageJsonPath, "utf8"))
@@ -130,14 +130,14 @@ if (includeVue) {
     vuePackageJson.version = version
 
     writeFileSync(vuePackageJsonPath, JSON.stringify(vuePackageJson, null, 2) + "\n")
-    console.log(`  @opentui/vue updated to version ${version}`)
-    console.log(`  Note: @opentui/core dependency will be set to ${version} during build`)
+    console.log(`  @vybestack/opentui-vue updated to version ${version}`)
+    console.log(`  Note: @vybestack/opentui-core dependency will be set to ${version} during build`)
   } catch (error) {
-    console.error(`  Failed to update @opentui/vue: ${error}`)
+    console.error(`  Failed to update @vybestack/opentui-vue: ${error}`)
     process.exit(1)
   }
 } else {
-  console.log("\nSkipping @opentui/vue (use --include-vue to include)")
+  console.log("\nSkipping @vybestack/opentui-vue (use --include-vue to include)")
 }
 
 console.log("\nUpdating bun.lock...")

@@ -1,5 +1,5 @@
-import { createCliRenderer, engine, type CliRendererConfig } from "@opentui/core"
-import { createTestRenderer, type TestRendererOptions } from "@opentui/core/testing"
+import { createCliRenderer, engine, type CliRendererConfig } from "@vybestack/opentui-core"
+import { createTestRenderer, type TestRendererOptions } from "@vybestack/opentui-core/testing"
 import type { JSX } from "./jsx-runtime"
 import { RendererContext } from "./src/elements"
 import { _render as renderInternal, createComponent } from "./src/reconciler"

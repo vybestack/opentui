@@ -15,7 +15,7 @@ import {
   TextNodeRenderable,
   TextRenderable,
   type TextNodeOptions,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import { useContext } from "solid-js"
 import { createRenderer } from "./renderer"
 import { getComponentCatalogue, RendererContext, SlotRenderable } from "./elements"

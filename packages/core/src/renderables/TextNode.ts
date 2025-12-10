@@ -11,7 +11,7 @@ export interface TextNodeOptions extends BaseRenderableOptions {
   attributes?: number
 }
 
-const BrandedTextNodeRenderable: unique symbol = Symbol.for("@opentui/core/TextNodeRenderable")
+const BrandedTextNodeRenderable: unique symbol = Symbol.for("@vybestack/opentui-core/TextNodeRenderable")
 
 export function isTextNodeRenderable(obj: any): obj is TextNodeRenderable {
   return !!obj?.[BrandedTextNodeRenderable]

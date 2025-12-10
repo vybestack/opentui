@@ -1,4 +1,4 @@
-import { TextAttributes, TextNodeRenderable, type RenderContext, type TextNodeOptions } from "@opentui/core"
+import { TextAttributes, TextNodeRenderable, type RenderContext, type TextNodeOptions } from "@vybestack/opentui-core"
 
 export const textNodeKeys = ["span", "b", "strong", "i", "em", "u", "br"] as const
 export type TextNodeKey = (typeof textNodeKeys)[number]

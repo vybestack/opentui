@@ -50,7 +50,7 @@ if (missingRequired.length > 0) {
   process.exit(1)
 }
 
-console.log(`Building @opentui/vue library${isDev ? " (dev mode)" : ""}...`)
+console.log(`Building @vybestack/opentui-vue library${isDev ? " (dev mode)" : ""}...`)
 
 const distDir = join(rootDir, "dist")
 rmSync(distDir, { recursive: true, force: true })
@@ -97,8 +97,8 @@ const tsconfigBuild = {
     moduleResolution: "bundler",
     baseUrl: ".",
     paths: {
-      "@opentui/core": ["../core/dist"],
-      "@opentui/core/*": ["../core/dist/*"],
+      "@vybestack/opentui-core": ["../core/dist"],
+      "@vybestack/opentui-core/*": ["../core/dist/*"],
     },
   },
   include: ["index.ts", "src/**/*", "types/opentui.d.ts"],
@@ -137,8 +137,8 @@ const exports = {
 }
 
 const processedDependencies = { ...packageJson.dependencies }
-if (processedDependencies["@opentui/core"] === "workspace:*") {
-  processedDependencies["@opentui/core"] = packageJson.version
+if (processedDependencies["@vybestack/opentui-core"] === "workspace:*") {
+  processedDependencies["@vybestack/opentui-core"] = packageJson.version
 }
 
 writeFileSync(

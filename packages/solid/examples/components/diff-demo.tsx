@@ -1,6 +1,6 @@
 import { createSignal } from "solid-js"
-import { SyntaxStyle } from "@opentui/core"
-import { useKeyboard } from "@opentui/solid"
+import { SyntaxStyle } from "@vybestack/opentui-core"
+import { useKeyboard } from "@vybestack/opentui-solid"
 
 export default function DiffDemo() {
   const [currentView, setCurrentView] = createSignal<"unified" | "split">("unified")

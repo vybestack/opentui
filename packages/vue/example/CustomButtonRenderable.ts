@@ -1,4 +1,4 @@
-import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@opentui/core"
+import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@vybestack/opentui-core"
 
 export class ConsoleButtonRenderable extends BoxRenderable {
   private _label: string = "Button"

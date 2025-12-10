@@ -1,4 +1,4 @@
-import { SyntaxStyle, RGBA } from "@opentui/core"
+import { SyntaxStyle, RGBA } from "@vybestack/opentui-core"
 
 export function CodeDemo() {
   const syntaxStyle = SyntaxStyle.fromStyles({

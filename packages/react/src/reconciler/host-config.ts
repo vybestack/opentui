@@ -1,4 +1,4 @@
-import { TextNodeRenderable, TextRenderable, type Renderable } from "@opentui/core"
+import { TextNodeRenderable, TextRenderable, type Renderable } from "@vybestack/opentui-core"
 import { createContext } from "react"
 import type { HostConfig, ReactContext } from "react-reconciler"
 import { DefaultEventPriority, NoEventPriority } from "react-reconciler/constants"

@@ -46,10 +46,10 @@ if [ -z "$TARGET_ROOT" ]; then
     echo "Example: $0 /path/to/your/project --dist --copy"
     echo "Example: $0 /path/to/your/project --solid --subdeps"
     echo ""
-    echo "By default, only @opentui/core is linked."
+    echo "By default, only @vybestack/opentui-core is linked."
     echo "Options:"
-    echo "  --react    Also link @opentui/react"
-    echo "  --solid    Also link @opentui/solid and solid-js"
+    echo "  --react    Also link @vybestack/opentui-react"
+    echo "  --solid    Also link @vybestack/opentui-solid and solid-js"
     echo "  --dist     Link dist directories instead of source packages"
     echo "  --copy     Copy dist directories instead of symlinking (requires --dist)"
     echo "  --subdeps  Find and link packages that depend on opentui (e.g., opentui-spinner)"
@@ -102,7 +102,7 @@ link_or_copy() {
     fi
 }
 
-mkdir -p "$NODE_MODULES_DIR/@opentui"
+mkdir -p "$NODE_MODULES_DIR/@vybestack"
 
 # Determine path suffix and message
 if [ "$LINK_DIST" = true ]; then
@@ -118,10 +118,10 @@ else
 fi
 
 # Always link core
-remove_if_exists "$NODE_MODULES_DIR/@opentui/core"
+remove_if_exists "$NODE_MODULES_DIR/@vybestack/opentui-core"
 CORE_PATH="$OPENTUI_ROOT/packages/core$SUFFIX"
 if [ -d "$CORE_PATH" ]; then
-    link_or_copy "$CORE_PATH" "$NODE_MODULES_DIR/@opentui/core" "@opentui/core"
+    link_or_copy "$CORE_PATH" "$NODE_MODULES_DIR/@vybestack/opentui-core" "@vybestack/opentui-core"
 else
     echo "Warning: $CORE_PATH not found"
 fi
@@ -142,10 +142,10 @@ fi
 
 # Link React if requested
 if [ "$LINK_REACT" = true ]; then
-    remove_if_exists "$NODE_MODULES_DIR/@opentui/react"
+    remove_if_exists "$NODE_MODULES_DIR/@vybestack/opentui-react"
     REACT_PATH="$OPENTUI_ROOT/packages/react$SUFFIX"
     if [ -d "$REACT_PATH" ]; then
-        link_or_copy "$REACT_PATH" "$NODE_MODULES_DIR/@opentui/react" "@opentui/react"
+        link_or_copy "$REACT_PATH" "$NODE_MODULES_DIR/@vybestack/opentui-react" "@vybestack/opentui-react"
     else
         echo "Warning: $REACT_PATH not found"
     fi
@@ -192,10 +192,10 @@ fi
 
 # Link Solid and solid-js if requested
 if [ "$LINK_SOLID" = true ]; then
-    remove_if_exists "$NODE_MODULES_DIR/@opentui/solid"
+    remove_if_exists "$NODE_MODULES_DIR/@vybestack/opentui-solid"
     SOLID_PATH="$OPENTUI_ROOT/packages/solid$SUFFIX"
     if [ -d "$SOLID_PATH" ]; then
-        link_or_copy "$SOLID_PATH" "$NODE_MODULES_DIR/@opentui/solid" "@opentui/solid"
+        link_or_copy "$SOLID_PATH" "$NODE_MODULES_DIR/@vybestack/opentui-solid" "@vybestack/opentui-solid"
     else
         echo "Warning: $SOLID_PATH not found"
     fi
@@ -226,9 +226,9 @@ if [ "$LINK_SUBDEPS" = true ]; then
             return
         fi
         
-        # Find packages that have peerDependencies or dependencies on @opentui packages
+        # Find packages that have peerDependencies or dependencies on @vybestack packages
         # Bun.lock format has package entries with dependencies/peerDependencies on same line
-        grep '@opentui/' "$TARGET_ROOT/bun.lock" | grep -E '(peer)?[Dd]ependencies' | sed 's/^[[:space:]]*"\([^"]*\)".*/\1/' | grep -v '^@opentui' | grep -v '^\$' | grep -v '^#' | grep -v dependencies | grep -v ':' | sort -u || true
+        grep '@vybestack/' "$TARGET_ROOT/bun.lock" | grep -E '(peer)?[Dd]ependencies' | sed 's/^[[:space:]]*"\([^"]*\)".*/\1/' | grep -v '^@vybestack' | grep -v '^\$' | grep -v '^#' | grep -v dependencies | grep -v ':' | sort -u || true
     }
     
     # Function to find packages with opentui dependencies in package.json files
@@ -238,8 +238,8 @@ if [ "$LINK_SUBDEPS" = true ]; then
         fi
         
         find "$TARGET_ROOT/packages" -name "package.json" -type f 2>/dev/null | while read -r pkg_json; do
-            if grep -q '@opentui' "$pkg_json" 2>/dev/null; then
-                grep -m1 '"name"' "$pkg_json" | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/' | grep -v '@opentui' || true
+            if grep -q '@vybestack' "$pkg_json" 2>/dev/null; then
+                grep -m1 '"name"' "$pkg_json" | sed 's/.*"name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/' | grep -v '@vybestack' || true
             fi
         done | sort -u
     }
@@ -255,38 +255,38 @@ if [ "$LINK_SUBDEPS" = true ]; then
         
         local linked_any=false
         
-        # Link @opentui/core if it exists
-        if [ -d "$location_path/@opentui/core" ] || [ -L "$location_path/@opentui/core" ]; then
-            remove_if_exists "$location_path/@opentui/core"
+        # Link @vybestack/opentui-core if it exists
+        if [ -d "$location_path/@vybestack/opentui-core" ] || [ -L "$location_path/@vybestack/opentui-core" ]; then
+            remove_if_exists "$location_path/@vybestack/opentui-core"
             CORE_PATH="$OPENTUI_ROOT/packages/core$SUFFIX"
             if [ -d "$CORE_PATH" ]; then
-                mkdir -p "$location_path/@opentui"
-                ln -s "$CORE_PATH" "$location_path/@opentui/core"
-                echo "    ✓ Linked @opentui/core in $location_desc"
+                mkdir -p "$location_path/@vybestack"
+                ln -s "$CORE_PATH" "$location_path/@vybestack/opentui-core"
+                echo "    ✓ Linked @vybestack/opentui-core in $location_desc"
                 linked_any=true
             fi
         fi
         
-        # Link @opentui/react if it exists
-        if [ -d "$location_path/@opentui/react" ] || [ -L "$location_path/@opentui/react" ]; then
-            remove_if_exists "$location_path/@opentui/react"
+        # Link @vybestack/opentui-react if it exists
+        if [ -d "$location_path/@vybestack/opentui-react" ] || [ -L "$location_path/@vybestack/opentui-react" ]; then
+            remove_if_exists "$location_path/@vybestack/opentui-react"
             REACT_PATH="$OPENTUI_ROOT/packages/react$SUFFIX"
             if [ -d "$REACT_PATH" ]; then
-                mkdir -p "$location_path/@opentui"
-                ln -s "$REACT_PATH" "$location_path/@opentui/react"
-                echo "    ✓ Linked @opentui/react in $location_desc"
+                mkdir -p "$location_path/@vybestack"
+                ln -s "$REACT_PATH" "$location_path/@vybestack/opentui-react"
+                echo "    ✓ Linked @vybestack/opentui-react in $location_desc"
                 linked_any=true
             fi
         fi
         
-        # Link @opentui/solid if it exists
-        if [ -d "$location_path/@opentui/solid" ] || [ -L "$location_path/@opentui/solid" ]; then
-            remove_if_exists "$location_path/@opentui/solid"
+        # Link @vybestack/opentui-solid if it exists
+        if [ -d "$location_path/@vybestack/opentui-solid" ] || [ -L "$location_path/@vybestack/opentui-solid" ]; then
+            remove_if_exists "$location_path/@vybestack/opentui-solid"
             SOLID_PATH="$OPENTUI_ROOT/packages/solid$SUFFIX"
             if [ -d "$SOLID_PATH" ]; then
-                mkdir -p "$location_path/@opentui"
-                ln -s "$SOLID_PATH" "$location_path/@opentui/solid"
-                echo "    ✓ Linked @opentui/solid in $location_desc"
+                mkdir -p "$location_path/@vybestack"
+                ln -s "$SOLID_PATH" "$location_path/@vybestack/opentui-solid"
+                echo "    ✓ Linked @vybestack/opentui-solid in $location_desc"
                 linked_any=true
             fi
         fi
@@ -323,7 +323,7 @@ if [ "$LINK_SUBDEPS" = true ]; then
             # Check in bun's cache directories
             if [ -d "$NODE_MODULES_DIR/.bun" ]; then
                 find "$NODE_MODULES_DIR/.bun" -type d -maxdepth 1 -name "*$pkg@*" 2>/dev/null | while read -r bun_pkg_cache; do
-                    # Bun stores packages as: .bun/package@version/node_modules/@opentui/...
+                    # Bun stores packages as: .bun/package@version/node_modules/@vybestack/...
                     if [ -d "$bun_pkg_cache/node_modules" ]; then
                         link_opentui_in_location "$bun_pkg_cache/node_modules" "$pkg (bun cache: $(basename "$bun_pkg_cache"))"
                     fi

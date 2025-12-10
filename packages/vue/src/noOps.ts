@@ -1,4 +1,4 @@
-import { Renderable, TextRenderable } from "@opentui/core"
+import { Renderable, TextRenderable } from "@vybestack/opentui-core"
 import { TextNode, type OpenTUINode, ChunkToTextNodeMap } from "./nodes"
 import { getNextId } from "./utils"
 

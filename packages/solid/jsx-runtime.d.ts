@@ -1,4 +1,4 @@
-import { Renderable } from "@opentui/core"
+import { Renderable } from "@vybestack/opentui-core"
 import type {
   AsciiFontProps,
   BoxProps,

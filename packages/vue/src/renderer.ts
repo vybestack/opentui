@@ -11,7 +11,7 @@ import {
   type TextChunk,
   Renderable,
   type CliRenderer,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import { getNextId } from "./utils"
 import { type OpenTUINode, type OpenTUIElement, TextNode, WhiteSpaceNode, ChunkToTextNodeMap } from "./nodes"
 import { elements, type Element } from "./elements"

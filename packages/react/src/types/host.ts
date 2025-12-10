@@ -1,4 +1,4 @@
-import type { BaseRenderable, RootRenderable, TextNodeRenderable } from "@opentui/core"
+import type { BaseRenderable, RootRenderable, TextNodeRenderable } from "@vybestack/opentui-core"
 import { baseComponents } from "../components"
 
 export type Type = keyof typeof baseComponents

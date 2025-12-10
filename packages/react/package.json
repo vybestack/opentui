@@ -1,11 +1,11 @@
 {
-  "name": "@opentui/react",
+  "name": "@vybestack/opentui-react",
   "version": "0.1.60",
-  "description": "React renderer for building terminal user interfaces using OpenTUI core",
+  "description": "React renderer for building terminal user interfaces using OpenTUI core - Vybestack fork with terminal image support",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sst/opentui",
+    "url": "https://github.com/vybestack/opentui",
     "directory": "packages/react"
   },
   "module": "src/index.ts",
@@ -47,7 +47,7 @@
     "react": ">=19.0.0"
   },
   "dependencies": {
-    "@opentui/core": "workspace:*",
+    "@vybestack/opentui-core": "workspace:*",
     "react-reconciler": "^0.32.0"
   }
 }

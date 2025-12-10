@@ -1,5 +1,5 @@
-import { render } from "@opentui/solid"
-import { ConsolePosition } from "@opentui/core"
+import { render } from "@vybestack/opentui-solid"
+import { ConsolePosition } from "@vybestack/opentui-core"
 import ExampleSelector from "./components/ExampleSelector"
 
 // Uncomment to debug solidjs reconciler

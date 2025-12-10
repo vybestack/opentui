@@ -1,9 +1,9 @@
 import { describe, expect, it, beforeEach, afterEach } from "bun:test"
 import { testRender } from "../index"
 import { createSignal } from "solid-js"
-import { createSpy } from "@opentui/core/testing"
+import { createSpy } from "@vybestack/opentui-core/testing"
 import { usePaste, useKeyboard } from "../src/elements/hooks"
-import type { PasteEvent } from "@opentui/core"
+import type { PasteEvent } from "@vybestack/opentui-core"
 
 let testSetup: Awaited<ReturnType<typeof testRender>>
 

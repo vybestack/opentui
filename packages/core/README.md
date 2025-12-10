@@ -14,7 +14,7 @@ development and is not ready for production use.
 ## Install
 
 ```bash
-bun install @opentui/core
+bun install @vybestack/opentui-core
 ```
 
 ## Build
@@ -49,7 +49,7 @@ See [src/zig/bench.zig](src/zig/bench.zig) for available options like `--filter`
 Renderables are hierarchical objects that can be positioned, nested, styled and rendered to the terminal:
 
 ```typescript
-import { createCliRenderer, TextRenderable } from "@opentui/core"
+import { createCliRenderer, TextRenderable } from "@vybestack/opentui-core"
 
 const renderer = await createCliRenderer()
 

@@ -33,7 +33,7 @@ import {
   isOverflowType,
 } from "./lib/renderable.validations"
 
-const BrandedRenderable: unique symbol = Symbol.for("@opentui/core/Renderable")
+const BrandedRenderable: unique symbol = Symbol.for("@vybestack/opentui-core/Renderable")
 
 export enum LayoutEvents {
   LAYOUT_CHANGED = "layout-changed",

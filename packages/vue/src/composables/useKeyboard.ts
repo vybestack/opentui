@@ -1,5 +1,5 @@
 // packages/vue/src/composables/useKeyboard.ts
-import { type KeyEvent } from "@opentui/core"
+import { type KeyEvent } from "@vybestack/opentui-core"
 import { onMounted, onUnmounted } from "vue"
 import { useCliRenderer } from "./useCliRenderer"
 

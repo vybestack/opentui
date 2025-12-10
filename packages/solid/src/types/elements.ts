@@ -24,7 +24,7 @@ import type {
   TextOptions,
   TextRenderable,
   KeyEvent,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import type { Ref } from "solid-js"
 import type { JSX } from "../../jsx-runtime"
 

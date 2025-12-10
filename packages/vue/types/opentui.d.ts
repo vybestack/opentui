@@ -14,7 +14,7 @@ import type {
   TextChunk,
   TextOptions,
   ScrollBoxOptions,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 
 type NonStyledProps = "buffered" | "live" | "enableLayout" | "selectable"
 

@@ -1,6 +1,6 @@
 import { createMemo, For, createSignal } from "solid-js"
-import { LinearScrollAccel, MacOSScrollAccel } from "@opentui/core"
-import { useKeyboard } from "@opentui/solid"
+import { LinearScrollAccel, MacOSScrollAccel } from "@vybestack/opentui-core"
+import { useKeyboard } from "@vybestack/opentui-solid"
 
 /**
  * Custom scroll acceleration that applies a simple quadratic curve

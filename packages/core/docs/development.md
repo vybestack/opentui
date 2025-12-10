@@ -55,8 +55,8 @@ Link your local OpenTUI to another project:
 
 **Options:**
 
-- `--react` - Also link `@opentui/react` and React dependencies
-- `--solid` - Also link `@opentui/solid` and SolidJS dependencies
+- `--react` - Also link `@vybestack/opentui-react` and React dependencies
+- `--solid` - Also link `@vybestack/opentui-solid` and SolidJS dependencies
 - `--dist` - Link built `dist` directories instead of source
 - `--copy` - Copy instead of symlink (requires `--dist`)
 - `--subdeps` - Find and link packages that depend on opentui (e.g., `opentui-spinner`)
@@ -79,7 +79,7 @@ Link your local OpenTUI to another project:
 
 The script automatically links:
 
-- Main packages: `@opentui/core`, `@opentui/solid`, `@opentui/react`
+- Main packages: `@vybestack/opentui-core`, `@vybestack/opentui-solid`, `@vybestack/opentui-react`
 - Peer dependencies: `yoga-layout`, `solid-js`, `react`, `react-dom`, `react-reconciler`
 - Subdependencies (with `--subdeps`): Packages like `opentui-spinner` that depend on opentui
 

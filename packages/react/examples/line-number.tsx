@@ -1,5 +1,5 @@
-import { createCliRenderer, LineNumberRenderable, RGBA, SyntaxStyle } from "@opentui/core"
-import { createRoot, useKeyboard } from "@opentui/react"
+import { createCliRenderer, LineNumberRenderable, RGBA, SyntaxStyle } from "@vybestack/opentui-core"
+import { createRoot, useKeyboard } from "@vybestack/opentui-react"
 import { useEffect, useRef, useState } from "react"
 
 export default function App() {

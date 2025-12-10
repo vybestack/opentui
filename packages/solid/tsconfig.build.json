@@ -10,12 +10,12 @@
     "types": ["bun", "node"],
     "skipLibCheck": true,
     "jsx": "preserve",
-    "jsxImportSource": "@opentui/solid",
+    "jsxImportSource": "@vybestack/opentui-solid",
     "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@opentui/core": ["../core/dist"],
-      "@opentui/core/*": ["../core/dist/*"]
+      "@vybestack/opentui-core": ["../core/dist"],
+      "@vybestack/opentui-core/*": ["../core/dist/*"]
     }
   },
   "include": [

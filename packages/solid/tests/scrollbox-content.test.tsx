@@ -3,7 +3,7 @@ import { testRender } from "../index"
 import { createSignal, createMemo, createEffect, For } from "solid-js"
 import type { ScrollBoxRenderable } from "../../core/src/renderables"
 import { SyntaxStyle } from "../../core/src/syntax-style"
-import { MockTreeSitterClient } from "@opentui/core/testing"
+import { MockTreeSitterClient } from "@vybestack/opentui-core/testing"
 
 let testSetup: Awaited<ReturnType<typeof testRender>>
 let mockTreeSitterClient: MockTreeSitterClient

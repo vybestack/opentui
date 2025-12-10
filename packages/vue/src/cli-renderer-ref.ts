@@ -1,4 +1,4 @@
-import type { CliRenderer } from "@opentui/core"
+import type { CliRenderer } from "@vybestack/opentui-core"
 
 let currentCliRenderer: CliRenderer | null = null
 

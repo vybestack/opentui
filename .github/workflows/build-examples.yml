@@ -49,8 +49,8 @@ jobs:
           unzip -q npm-packages.zip
 
           # Create node_modules structure
-          mkdir -p node_modules/@opentui
-          mkdir -p packages/core/node_modules/@opentui
+          mkdir -p node_modules/@vybestack
+          mkdir -p packages/core/node_modules/@vybestack
 
           # Copy core dist (required)
           echo "Copying core dist..."
@@ -62,8 +62,8 @@ jobs:
           # Copy native packages to core's node_modules (required - these OVERRIDE the npm versions)
           echo "Copying built native packages (overriding any npm versions)..."
           test -d "npm-packages/core-native-packages" || (echo "❌ core-native-packages not found in artifact!" && exit 1)
-          cp -r npm-packages/core-native-packages/* packages/core/node_modules/@opentui/
-          test -n "$(ls -A packages/core/node_modules/@opentui/)" || (echo "❌ No native packages copied!" && exit 1)
+          cp -r npm-packages/core-native-packages/* packages/core/node_modules/@vybestack/
+          test -n "$(ls -A packages/core/node_modules/@vybestack/)" || (echo "❌ No native packages copied!" && exit 1)
           echo "✅ Native packages copied"
 
           # Copy other package dists (optional)
@@ -85,7 +85,7 @@ jobs:
           echo ""
           echo "Package extraction complete:"
           ls -lah packages/core/dist/
-          ls -lah packages/core/node_modules/@opentui/
+          ls -lah packages/core/node_modules/@vybestack/
 
       - name: Verify bun-webgpu is available for build
         run: |

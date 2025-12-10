@@ -1,5 +1,5 @@
 import { createSignal, Match, Show, Switch } from "solid-js"
-import { render, useKeyboard, useRenderer } from "@opentui/solid"
+import { render, useKeyboard, useRenderer } from "@vybestack/opentui-solid"
 
 process.env.DEBUG = "true"
 

@@ -1,5 +1,5 @@
-import { createCliRenderer } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 import { useEffect, useState } from "react"
 
 export const App = () => {

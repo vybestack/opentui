@@ -1,4 +1,4 @@
-# @opentui/vue
+# @vybestack/opentui-vue
 
 Vue.js support for [OpenTUI](https://github.com/sst/opentui).
 
@@ -21,7 +21,7 @@ bun init -y
 ### 2. Add dependencies
 
 ```bash
-bun add vue @opentui/core @opentui/vue
+bun add vue @vybestack/opentui-core @vybestack/opentui-vue
 ```
 
 ### 3. Create type definition for vue files
@@ -56,7 +56,7 @@ declare module "*.vue" {
 ```ts
 // index.ts
 import { createApp } from "vue"
-import { render } from "@opentui/vue"
+import { render } from "@vybestack/opentui-vue"
 import App from "./App.vue"
 
 render(createApp(App))
@@ -110,7 +110,7 @@ The <textRenderable> component only accepts plain text as a direct child. For st
 
 ```jsx
 <script setup lang="ts">
-import { blue, bold, t, underline, type TextChunk } from "@opentui/core"
+import { blue, bold, t, underline, type TextChunk } from "@vybestack/opentui-core"
 
 const styledText = t`This is ${underline(blue("styled"))} text.`
 const textChunk: TextChunk = bold(`This is a text chunk.`)
@@ -126,14 +126,14 @@ const textChunk: TextChunk = bold(`This is a text chunk.`)
 
 ## Composables
 
-@opentui/vue provides a set of composables to interact with the terminal and respond to events.
+@vybestack/opentui-vue provides a set of composables to interact with the terminal and respond to events.
 
 ### useCliRenderer
 
-This composable returns the underlying CliRenderer instance from @opentui/core.
+This composable returns the underlying CliRenderer instance from @vybestack/opentui-core.
 
 ```ts
-import { useCliRenderer } from "@opentui/vue"
+import { useCliRenderer } from "@vybestack/opentui-vue"
 
 const renderer = useCliRenderer()
 ```
@@ -145,8 +145,8 @@ Listen to keypress events in your components.
 ```jsx
 <script setup lang="ts">
 import { ref } from "vue"
-import { useKeyboard } from "@opentui/vue"
-import type { KeyEvent } from "@opentui/core"
+import { useKeyboard } from "@vybestack/opentui-vue"
+import type { KeyEvent } from "@vybestack/opentui-core"
 
 const lastKey = ref("")
 
@@ -168,7 +168,7 @@ Execute a callback function whenever the terminal window is resized.
 
 ```vue
 <script setup lang="ts">
-import { useOnResize } from "@opentui/vue"
+import { useOnResize } from "@vybestack/opentui-vue"
 
 useOnResize((width, height) => {
   console.log(`Terminal resized to ${width}x${height}`)
@@ -182,7 +182,7 @@ Get the current terminal dimensions as a reactive object. The dimensions will au
 
 ```jsx
 <script setup lang="ts">
-import { useTerminalDimensions } from "@opentui/vue"
+import { useTerminalDimensions } from "@vybestack/opentui-vue"
 
 const dimensions = useTerminalDimensions()
 </script>
@@ -196,7 +196,7 @@ const dimensions = useTerminalDimensions()
 
 ## Extending with Custom Components
 
-`@opentui/vue` allows you to create and use your own custom components in your TUI applications. This is useful for creating reusable UI elements with specific styles and behaviors.
+`@vybestack/opentui-vue` allows you to create and use your own custom components in your TUI applications. This is useful for creating reusable UI elements with specific styles and behaviors.
 
 The `extend` function is used to register your custom components with the Vue renderer.
 
@@ -206,12 +206,12 @@ Here's a step-by-step guide to creating a custom button component.
 
 #### 1. Create the custom renderable
 
-First, create a class that extends one of the base renderables from `@opentui/core`. For our custom button, we'll extend `BoxRenderable`.
+First, create a class that extends one of the base renderables from `@vybestack/opentui-core`. For our custom button, we'll extend `BoxRenderable`.
 
 `CustomButtonRenderable.ts`:
 
 ```typescript
-import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@opentui/core"
+import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@vybestack/opentui-core"
 
 export class ConsoleButtonRenderable extends BoxRenderable {
   private _label: string = "Button"
@@ -255,7 +255,7 @@ In your application's entry point (e.g., `main.ts`), import the `extend` functio
 `main.ts`:
 
 ```typescript
-import { render, extend } from "@opentui/vue"
+import { render, extend } from "@vybestack/opentui-vue"
 import { ConsoleButtonRenderable } from "./CustomButtonRenderable"
 import App from "./App.vue"
 
@@ -266,18 +266,18 @@ extend({ consoleButtonRenderable: ConsoleButtonRenderable })
 render(App)
 ```
 
-> **Important:** The `extend` function should be called in your main application entry file (e.g., `main.ts` or `index.js`). Calling it inside the `<script>` section of a `.vue` file can cause issues with the Vue compiler. It may incorrectly try to instantiate the renderable classes you import from `@opentui/core`, leading to a runtime error.
+> **Important:** The `extend` function should be called in your main application entry file (e.g., `main.ts` or `index.js`). Calling it inside the `<script>` section of a `.vue` file can cause issues with the Vue compiler. It may incorrectly try to instantiate the renderable classes you import from `@vybestack/opentui-core`, leading to a runtime error.
 
 #### 3. Add TypeScript definitions
 
-To get proper type-checking and autocompletion for your custom component in Vue templates, you need to augment the `@opentui/vue` types. Create a declaration file (e.g., `opentui.d.ts`) in your project and add the following:
+To get proper type-checking and autocompletion for your custom component in Vue templates, you need to augment the `@vybestack/opentui-vue` types. Create a declaration file (e.g., `opentui.d.ts`) in your project and add the following:
 
 `opentui.d.ts`:
 
 ```typescript
 import { ConsoleButtonRenderable } from "./CustomButtonRenderable"
 
-declare module "@opentui/vue" {
+declare module "@vybestack/opentui-vue" {
   export interface OpenTUIComponents {
     consoleButtonRenderable: typeof ConsoleButtonRenderable
   }

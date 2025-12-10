@@ -1,5 +1,5 @@
-import { render } from "@opentui/vue"
-import { extend } from "@opentui/vue"
+import { render } from "@vybestack/opentui-vue"
+import { extend } from "@vybestack/opentui-vue"
 import { ConsoleButtonRenderable } from "./CustomButtonRenderable"
 import App from "./App.vue"
 

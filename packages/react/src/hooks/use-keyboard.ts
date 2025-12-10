@@ -1,4 +1,4 @@
-import type { KeyEvent } from "@opentui/core"
+import type { KeyEvent } from "@vybestack/opentui-core"
 import { useEffect } from "react"
 import { useAppContext } from "../components/app"
 import { useEffectEvent } from "./use-event"

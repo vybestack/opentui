@@ -14,7 +14,7 @@ import {
   TextRenderable,
   type RenderContext,
   type TextNodeOptions,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import type { RenderableConstructor } from "../types/elements"
 export * from "./hooks"
 export * from "./extras"

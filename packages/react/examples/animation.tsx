@@ -1,5 +1,5 @@
-import { createCliRenderer, TextAttributes } from "@opentui/core"
-import { createRoot, useTimeline } from "@opentui/react"
+import { createCliRenderer, TextAttributes } from "@vybestack/opentui-core"
+import { createRoot, useTimeline } from "@vybestack/opentui-react"
 import { useEffect, useState } from "react"
 
 type Stats = {

@@ -6,7 +6,7 @@ import {
   TabSelectRenderable,
   TextRenderable,
   ScrollBoxRenderable,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 
 export const elements = {
   asciiFontRenderable: ASCIIFontRenderable,

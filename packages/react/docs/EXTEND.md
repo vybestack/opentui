@@ -7,8 +7,8 @@ The `extend` function allows you to add custom renderable components to the Open
 ### Extending Components
 
 ```tsx
-import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@opentui/core"
-import { extend, render } from "@opentui/react"
+import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@vybestack/opentui-core"
+import { extend, render } from "@vybestack/opentui-react"
 
 class ConsoleButton extends BoxRenderable {
   public label: string = "Button"
@@ -31,7 +31,7 @@ class ConsoleButton extends BoxRenderable {
   }
 }
 
-declare module "@opentui/react" {
+declare module "@vybestack/opentui-react" {
   interface OpenTUIComponents {
     consoleButton: typeof ConsoleButton
   }
@@ -54,7 +54,7 @@ For full TypeScript support, declare your extended components using module augme
 
 ```tsx
 // In your component file or declaration file
-declare module "@opentui/react" {
+declare module "@vybestack/opentui-react" {
   interface OpenTUIComponents {
     consoleButton: typeof ConsoleButton
   }

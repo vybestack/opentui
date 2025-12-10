@@ -1,5 +1,5 @@
-import { createCliRenderer } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 
 const LOREM = [
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",

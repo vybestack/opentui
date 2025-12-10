@@ -1,6 +1,6 @@
-import { Selection } from "@opentui/core"
-import { ConsolePosition } from "@opentui/core"
-import { render, useRenderer, useSelectionHandler, type TextProps } from "@opentui/solid"
+import { Selection } from "@vybestack/opentui-core"
+import { ConsolePosition } from "@vybestack/opentui-core"
+import { render, useRenderer, useSelectionHandler, type TextProps } from "@vybestack/opentui-solid"
 import { createEffect, createSignal, onMount } from "solid-js"
 
 const words = ["Hello", "World", "OpenTUI", "SolidJS", "ReactJS", "TypeScript", "JavaScript", "CSS", "HTML", "JSX"]

@@ -27,7 +27,7 @@ OpenTUI includes a built-in console overlay that captures all `console.log`, `co
 ## Basic Setup
 
 ```typescript
-import { createCliRenderer, TextRenderable, Text } from "@opentui/core"
+import { createCliRenderer, TextRenderable, Text } from "@vybestack/opentui-core"
 
 const renderer = await createCliRenderer()
 
@@ -60,7 +60,7 @@ renderer.root.add(greeting)
 When focused, you can use your arrow keys to scroll through the console. `renderer.console.toggle()` will toggle the console overlay, when open but not focused, it will focus the console. `+` and `-` will increase and decrease the size of the console.
 
 ```typescript
-import { createCliRenderer, ConsolePosition } from "@opentui/core"
+import { createCliRenderer, ConsolePosition } from "@vybestack/opentui-core"
 
 const renderer = await createCliRenderer({
   consoleOptions: {
@@ -85,7 +85,7 @@ renderer.console.toggle()
 OpenTUI uses the `RGBA` class for consistent color representation throughout the library. Colors are internally stored as normalized float values (0.0-1.0) for efficient processing, but the class provides convenient methods for working with different color formats.
 
 ```typescript
-import { RGBA } from "@opentui/core"
+import { RGBA } from "@vybestack/opentui-core"
 
 const redFromInts = RGBA.fromInts(255, 0, 0, 255) // RGB integers (0-255)
 const blueFromValues = RGBA.fromValues(0.0, 0.0, 1.0, 1.0) // Float values (0.0-1.0)
@@ -100,7 +100,7 @@ The `parseColor()` utility function accepts both RGBA objects and color strings 
 OpenTUI provides a keyboard handler that parses terminal input and provides structured key events. Get the handler via `renderer.keyInput`, an EventEmitter that emits `keypress` and `paste` events with detailed key information.
 
 ```typescript
-import { type KeyEvent } from "@opentui/core"
+import { type KeyEvent } from "@vybestack/opentui-core"
 
 const keyHandler = renderer.keyInput
 
@@ -131,7 +131,7 @@ OpenTUI provides several primitive components that you can use to build your int
 Display styled text content with support for colors, attributes, and text selection.
 
 ```typescript
-import { TextRenderable, TextAttributes, t, bold, underline, fg } from "@opentui/core"
+import { TextRenderable, TextAttributes, t, bold, underline, fg } from "@vybestack/opentui-core"
 
 const plainText = new TextRenderable(renderer, {
   id: "plain-text",
@@ -158,7 +158,7 @@ const styledTextRenderable = new TextRenderable(renderer, {
 A container component with borders, background colors, and layout capabilities. Perfect for creating panels, frames, and organized sections.
 
 ```typescript
-import { BoxRenderable } from "@opentui/core"
+import { BoxRenderable } from "@vybestack/opentui-core"
 
 const panel = new BoxRenderable(renderer, {
   id: "panel",
@@ -181,7 +181,7 @@ Text input field with cursor support, placeholder text, and focus states for use
 Has to be focused to receive input.
 
 ```typescript
-import { InputRenderable, InputRenderableEvents } from "@opentui/core"
+import { InputRenderable, InputRenderableEvents } from "@vybestack/opentui-core"
 
 const nameInput = new InputRenderable(renderer, {
   id: "name-input",
@@ -206,7 +206,7 @@ A list selection component for choosing from multiple options.
 Has to be focused to receive input. Default keybindings are `up/k` and `down/j` to navigate the list, `enter` to select.
 
 ```typescript
-import { SelectRenderable, SelectRenderableEvents } from "@opentui/core"
+import { SelectRenderable, SelectRenderableEvents } from "@vybestack/opentui-core"
 
 const menu = new SelectRenderable(renderer, {
   id: "menu",
@@ -235,7 +235,7 @@ Horizontal tab-based selection component with descriptions and scroll support.
 Has to be focused to receive input. Default keybindings are `left/[` and `right/]` to navigate the tabs, `enter` to select.
 
 ```typescript
-import { TabSelectRenderable, TabSelectRenderableEvents } from "@opentui/core"
+import { TabSelectRenderable, TabSelectRenderableEvents } from "@vybestack/opentui-core"
 
 const tabs = new TabSelectRenderable(renderer, {
   id: "tabs",
@@ -263,7 +263,7 @@ tabs.focus()
 Display text using ASCII art fonts with multiple font styles available.
 
 ```typescript
-import { ASCIIFontRenderable, RGBA } from "@opentui/core"
+import { ASCIIFontRenderable, RGBA } from "@vybestack/opentui-core"
 
 const title = new ASCIIFontRenderable(renderer, {
   id: "title",
@@ -281,7 +281,7 @@ const title = new ASCIIFontRenderable(renderer, {
 A low-level rendering surface for custom graphics and complex visual effects.
 
 ```typescript
-import { FrameBufferRenderable, RGBA } from "@opentui/core"
+import { FrameBufferRenderable, RGBA } from "@vybestack/opentui-core"
 
 const canvas = new FrameBufferRenderable(renderer, {
   id: "canvas",
@@ -302,7 +302,7 @@ canvas.frameBuffer.drawText("Custom Graphics", 12, 7, RGBA.fromHex("#FFFFFF"))
 OpenTUI uses the Yoga layout engine, providing CSS Flexbox-like capabilities for responsive layouts:
 
 ```typescript
-import { GroupRenderable, BoxRenderable } from "@opentui/core"
+import { GroupRenderable, BoxRenderable } from "@vybestack/opentui-core"
 
 const container = new GroupRenderable(renderer, {
   id: "container",

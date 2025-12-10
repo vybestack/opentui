@@ -1,5 +1,5 @@
 import { inject } from "@vue/runtime-core"
-import type { CliRenderer } from "@opentui/core"
+import type { CliRenderer } from "@vybestack/opentui-core"
 import { cliRendererKey } from "../.."
 
 export function useCliRenderer(): CliRenderer {

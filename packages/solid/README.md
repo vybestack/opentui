@@ -1,11 +1,11 @@
-# @opentui/solid
+# @vybestack/opentui-solid
 
 Solid.js support for [OpenTUI](https://github.com/sst/opentui).
 
 ## Installation
 
 ```bash
-bun install solid-js @opentui/solid
+bun install solid-js @vybestack/opentui-solid
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ bun install solid-js @opentui/solid
 {
   "compilerOptions": {
     "jsx": "preserve",
-    "jsxImportSource": "@opentui/solid"
+    "jsxImportSource": "@vybestack/opentui-solid"
   }
 }
 ```
@@ -24,13 +24,13 @@ bun install solid-js @opentui/solid
 2. Add preload script to bunfig.toml:
 
 ```toml
-preload = ["@opentui/solid/preload"]
+preload = ["@vybestack/opentui-solid/preload"]
 ```
 
 3. Add render function to index.tsx:
 
 ```tsx
-import { render } from "@opentui/solid"
+import { render } from "@vybestack/opentui-solid"
 
 render(() => <text>Hello, World!</text>)
 ```
@@ -40,7 +40,7 @@ render(() => <text>Hello, World!</text>)
 5. To build use [Bun.build](https://bun.com/docs/bundler) ([source](https://github.com/sst/opentui/issues/122)):
 
 ```ts
-import solidPlugin from "@opentui/solid/bun-plugin"
+import solidPlugin from "@vybestack/opentui-solid/bun-plugin"
 
 await Bun.build({
   entrypoints: ["./index.tsx"],

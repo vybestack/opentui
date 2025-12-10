@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import { testRender } from "../index"
-import { SyntaxStyle, RGBA } from "@opentui/core"
+import { SyntaxStyle, RGBA } from "@vybestack/opentui-core"
 import { createSignal, Show } from "solid-js"
 
 let testSetup: Awaited<ReturnType<typeof testRender>>

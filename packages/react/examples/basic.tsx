@@ -1,5 +1,5 @@
-import { bold, createCliRenderer, fg, italic, t, TextAttributes } from "@opentui/core"
-import { createRoot, useKeyboard, useRenderer } from "@opentui/react"
+import { bold, createCliRenderer, fg, italic, t, TextAttributes } from "@vybestack/opentui-core"
+import { createRoot, useKeyboard, useRenderer } from "@vybestack/opentui-react"
 import { useCallback, useState } from "react"
 
 export const App = () => {

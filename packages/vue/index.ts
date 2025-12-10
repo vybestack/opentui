@@ -1,4 +1,4 @@
-import { CliRenderer, createCliRenderer, type CliRendererConfig } from "@opentui/core"
+import { CliRenderer, createCliRenderer, type CliRendererConfig } from "@vybestack/opentui-core"
 import { createOpenTUIRenderer } from "./src/renderer"
 import type { InjectionKey } from "vue"
 export * from "./src/composables/index"

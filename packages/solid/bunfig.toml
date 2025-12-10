@@ -1,5 +1,5 @@
-preload = ["@opentui/solid/preload"]
+preload = ["@vybestack/opentui-solid/preload"]
 
 [test]
-preload = ["@opentui/solid/preload"]
+preload = ["@vybestack/opentui-solid/preload"]
 root = "tests"

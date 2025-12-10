@@ -32,24 +32,24 @@ const rootDir = resolve(__dirname, "..")
 // Package configurations
 const ALL_PACKAGES: PackageConfig[] = [
   {
-    name: "@opentui/core",
+    name: "@vybestack/opentui-core",
     rootDir: join(rootDir, "packages", "core"),
     distDir: join(rootDir, "packages", "core", "dist"),
   },
   {
-    name: "@opentui/react",
+    name: "@vybestack/opentui-react",
     rootDir: join(rootDir, "packages", "react"),
     distDir: join(rootDir, "packages", "react", "dist"),
     requiresCore: true,
   },
   {
-    name: "@opentui/solid",
+    name: "@vybestack/opentui-solid",
     rootDir: join(rootDir, "packages", "solid"),
     distDir: join(rootDir, "packages", "solid", "dist"),
     requiresCore: true,
   },
   {
-    name: "@opentui/vue",
+    name: "@vybestack/opentui-vue",
     rootDir: join(rootDir, "packages", "vue"),
     distDir: join(rootDir, "packages", "vue", "dist"),
     requiresCore: true,
@@ -61,7 +61,7 @@ const args = process.argv.slice(2)
 const includeVue = args.includes("--include-vue")
 
 // Filter packages based on flags
-const PACKAGES = includeVue ? ALL_PACKAGES : ALL_PACKAGES.filter((pkg) => pkg.name !== "@opentui/vue")
+const PACKAGES = includeVue ? ALL_PACKAGES : ALL_PACKAGES.filter((pkg) => pkg.name !== "@vybestack/opentui-vue")
 
 function setupNpmAuth(): void {
   if (!process.env.NPM_AUTH_TOKEN) {
@@ -156,12 +156,12 @@ function validatePackage(config: PackageConfig): void {
   console.log(`SUCCESS: Source and dist versions match`)
 
   // For core package, check optional dependencies versions
-  if (config.name === "@opentui/core") {
+  if (config.name === "@vybestack/opentui-core") {
     const mismatches: VersionMismatch[] = []
 
     if (distPackageJson.optionalDependencies) {
       for (const depName of Object.keys(distPackageJson.optionalDependencies).filter((x) =>
-        x.startsWith("@opentui/core"),
+        x.startsWith("@vybestack/opentui-core"),
       )) {
         const nativeDir = join(config.rootDir, "node_modules", depName)
         if (!existsSync(nativeDir)) {
@@ -200,17 +200,17 @@ function validatePackage(config: PackageConfig): void {
     console.log(`SUCCESS: All optional dependencies versions match`)
   }
 
-  // For react/solid packages, check @opentui/core dependency version
+  // For react/solid packages, check @vybestack/opentui-core dependency version
   if (config.requiresCore) {
-    const coreDependencyVersion = distPackageJson.dependencies?.["@opentui/core"]
+    const coreDependencyVersion = distPackageJson.dependencies?.["@vybestack/opentui-core"]
     if (coreDependencyVersion !== packageJson.version) {
-      console.error(`ERROR: @opentui/core dependency version mismatch in dist`)
+      console.error(`ERROR: @vybestack/opentui-core dependency version mismatch in dist`)
       console.error(`  Expected: ${packageJson.version}`)
       console.error(`  Found: ${coreDependencyVersion}`)
       console.error("Please rebuild the package with 'bun run build'")
       process.exit(1)
     }
-    console.log(`SUCCESS: @opentui/core dependency version matches`)
+    console.log(`SUCCESS: @vybestack/opentui-core dependency version matches`)
   }
 
   console.log(`SUCCESS: ${config.name} validation complete`)
@@ -267,7 +267,7 @@ function main(): void {
   console.log("=".repeat(50))
 
   if (!includeVue) {
-    console.log("INFO: Skipping @opentui/vue (use --include-vue to include)")
+    console.log("INFO: Skipping @vybestack/opentui-vue (use --include-vue to include)")
   }
 
   // Setup NPM authentication once

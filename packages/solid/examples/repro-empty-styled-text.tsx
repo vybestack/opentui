@@ -1,6 +1,6 @@
 import { createSignal, Show } from "solid-js"
-import { render, useKeyboard, useRenderer } from "@opentui/solid"
-import { t } from "@opentui/core"
+import { render, useKeyboard, useRenderer } from "@vybestack/opentui-solid"
+import { t } from "@vybestack/opentui-core"
 
 process.env.DEBUG = "true"
 

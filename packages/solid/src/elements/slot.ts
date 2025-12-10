@@ -1,4 +1,4 @@
-import { BaseRenderable, isTextNodeRenderable, TextNodeRenderable, TextRenderable, Yoga } from "@opentui/core"
+import { BaseRenderable, isTextNodeRenderable, TextNodeRenderable, TextRenderable, Yoga } from "@vybestack/opentui-core"
 
 class SlotBaseRenderable extends BaseRenderable {
   constructor(id: string) {

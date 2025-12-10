@@ -1,4 +1,4 @@
-# @opentui/react
+# @vybestack/opentui-react
 
 A React renderer for building terminal user interfaces using [OpenTUI core](https://github.com/sst/opentui). Create rich, interactive console applications with familiar React patterns and components.
 
@@ -13,14 +13,14 @@ bun create tui --template react
 Manual installation:
 
 ```bash
-bun install @opentui/react @opentui/core react
+bun install @vybestack/opentui-react @vybestack/opentui-core react
 ```
 
 ## Quick Start
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 
 function App() {
   return <text>Hello, world!</text>
@@ -42,7 +42,7 @@ For optimal TypeScript support, configure your `tsconfig.json`:
     "module": "ESNext",
     "moduleResolution": "bundler",
     "jsx": "react-jsx",
-    "jsxImportSource": "@opentui/react",
+    "jsxImportSource": "@vybestack/opentui-react",
     "strict": true,
     "skipLibCheck": true
   }
@@ -137,8 +137,8 @@ Components can be styled using props or the `style` prop:
 Creates a root for rendering a React tree with the given CLI renderer.
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 
 const renderer = await createCliRenderer({
   // Optional renderer configuration
@@ -166,7 +166,7 @@ Renders a React element to the terminal. This function is deprecated in favor of
 Access the OpenTUI renderer instance.
 
 ```tsx
-import { useRenderer } from "@opentui/react"
+import { useRenderer } from "@vybestack/opentui-react"
 
 function App() {
   const renderer = useRenderer()
@@ -185,7 +185,7 @@ function App() {
 Handle keyboard events.
 
 ```tsx
-import { useKeyboard } from "@opentui/react"
+import { useKeyboard } from "@vybestack/opentui-react"
 
 function App() {
   useKeyboard((key) => {
@@ -209,7 +209,7 @@ By default, only receives press events (including key repeats with `repeated: tr
 **Example with release events:**
 
 ```tsx
-import { useKeyboard } from "@opentui/react"
+import { useKeyboard } from "@vybestack/opentui-react"
 import { useState } from "react"
 
 function App() {
@@ -243,7 +243,7 @@ function App() {
 Handle terminal resize events.
 
 ```tsx
-import { useOnResize, useRenderer } from "@opentui/react"
+import { useOnResize, useRenderer } from "@vybestack/opentui-react"
 import { useEffect } from "react"
 
 function App() {
@@ -266,7 +266,7 @@ function App() {
 Get current terminal dimensions and automatically update when the terminal is resized.
 
 ```tsx
-import { useTerminalDimensions } from "@opentui/react"
+import { useTerminalDimensions } from "@vybestack/opentui-react"
 
 function App() {
   const { width, height } = useTerminalDimensions()
@@ -291,7 +291,7 @@ function App() {
 Create and manage animations using OpenTUI's timeline system. This hook automatically registers and unregisters the timeline with the animation engine.
 
 ```tsx
-import { useTimeline } from "@opentui/react"
+import { useTimeline } from "@vybestack/opentui-react"
 import { useEffect, useState } from "react"
 
 function App() {
@@ -531,8 +531,8 @@ function App() {
 #### Textarea Component
 
 ```tsx
-import type { TextareaRenderable } from "@opentui/core"
-import { useKeyboard, useRenderer } from "@opentui/react"
+import type { TextareaRenderable } from "@vybestack/opentui-core"
+import { useKeyboard, useRenderer } from "@vybestack/opentui-react"
 import { useEffect, useRef } from "react"
 
 function App() {
@@ -562,7 +562,7 @@ function App() {
 Dropdown selection component.
 
 ```tsx
-import type { SelectOption } from "@opentui/core"
+import type { SelectOption } from "@vybestack/opentui-core"
 import { useState } from "react"
 
 function App() {
@@ -595,7 +595,7 @@ function App() {
 #### Code Component
 
 ```tsx
-import { RGBA, SyntaxStyle } from "@opentui/core"
+import { RGBA, SyntaxStyle } from "@vybestack/opentui-core"
 
 const syntaxStyle = SyntaxStyle.fromStyles({
   keyword: { fg: RGBA.fromHex("#ff6b6b"), bold: true }, // red, bold
@@ -628,8 +628,8 @@ function App() {
 Display code with line numbers, and optionally add diff highlights or diagnostic indicators.
 
 ```tsx
-import type { LineNumberRenderable } from "@opentui/core"
-import { RGBA, SyntaxStyle } from "@opentui/core"
+import type { LineNumberRenderable } from "@vybestack/opentui-core"
+import { RGBA, SyntaxStyle } from "@vybestack/opentui-core"
 import { useEffect, useRef } from "react"
 
 function App() {
@@ -690,8 +690,8 @@ For a complete interactive example with theme switching and keybindings, see [`e
 ### Login Form
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createRoot, useKeyboard } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot, useKeyboard } from "@vybestack/opentui-react"
 import { useCallback, useState } from "react"
 
 function App() {
@@ -754,8 +754,8 @@ createRoot(renderer).render(<App />)
 ### Counter with Timer
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 import { useEffect, useState } from "react"
 
 function App() {
@@ -783,8 +783,8 @@ createRoot(renderer).render(<App />)
 ### System Monitor Animation
 
 ```tsx
-import { createCliRenderer, TextAttributes } from "@opentui/core"
-import { createRoot, useTimeline } from "@opentui/react"
+import { createCliRenderer, TextAttributes } from "@vybestack/opentui-core"
+import { createRoot, useTimeline } from "@vybestack/opentui-react"
 import { useEffect, useState } from "react"
 
 type Stats = {
@@ -867,8 +867,8 @@ createRoot(renderer).render(<App />)
 ### Styled Text Showcase
 
 ```tsx
-import { createCliRenderer } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 
 function App() {
   return (
@@ -912,8 +912,8 @@ import {
   RGBA,
   type BoxOptions,
   type RenderContext,
-} from "@opentui/core"
-import { createRoot, extend } from "@opentui/react"
+} from "@vybestack/opentui-core"
+import { createRoot, extend } from "@vybestack/opentui-react"
 
 // Create custom component class
 class ButtonRenderable extends BoxRenderable {
@@ -948,7 +948,7 @@ class ButtonRenderable extends BoxRenderable {
 }
 
 // Add TypeScript support
-declare module "@opentui/react" {
+declare module "@vybestack/opentui-react" {
   interface OpenTUIComponents {
     consoleButton: typeof ButtonRenderable
   }

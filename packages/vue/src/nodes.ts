@@ -1,4 +1,4 @@
-import { Renderable, TextRenderable, RootRenderable, type TextChunk, type CliRenderer } from "@opentui/core"
+import { Renderable, TextRenderable, RootRenderable, type TextChunk, type CliRenderer } from "@vybestack/opentui-core"
 import { getNextId } from "./utils"
 import type { elements } from "./elements"
 

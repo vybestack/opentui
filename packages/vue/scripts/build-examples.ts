@@ -6,7 +6,7 @@ const result = await Bun.build({
   target: "bun",
   format: "esm",
   // splitting: false,
-  external: ["@opentui/core", "@opentui/vue", "vue"],
+  external: ["@vybestack/opentui-core", "@vybestack/opentui-vue", "vue"],
   plugins: [
     pluginVue3({
       isProduction: false,

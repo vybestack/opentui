@@ -1,9 +1,12 @@
-# OpenTUI
+# OpenTUI (Vybestack Fork)
+
+> **Note:** This is a fork of [sst/opentui](https://github.com/sst/opentui) maintained by Vybestack.
+> This fork adds terminal image support and may operate on a different release schedule than upstream.
+> Published packages use the `@vybestack/` scope on npm.
 
 <div align="center">
-    <a href="https://www.npmjs.com/package/@opentui/core"><img alt="npm" src="https://img.shields.io/npm/v/@opentui/core?style=flat-square" /></a>
-    <a href="https://github.com/sst/opentui/actions/workflows/build-core.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/sst/opentui/build-core.yml?style=flat-square&branch=main" /></a>
-    <a href="https://github.com/msmps/awesome-opentui"><img alt="awesome opentui list" src="https://awesome.re/badge-flat.svg" /></a>
+    <a href="https://www.npmjs.com/package/@vybestack/opentui-core"><img alt="npm" src="https://img.shields.io/npm/v/@vybestack/opentui-core?style=flat-square" /></a>
+    <a href="https://github.com/vybestack/opentui/actions/workflows/build-core.yml"><img alt="Build status" src="https://img.shields.io/github/actions/workflow/status/vybestack/opentui/build-core.yml?style=flat-square&branch=main" /></a>
 </div>
 
 OpenTUI is a TypeScript library for building terminal user interfaces (TUIs). It is currently in
@@ -18,11 +21,8 @@ bun create tui
 
 This monorepo contains the following packages:
 
-- [`@opentui/core`](packages/core) - The core library works completely standalone, providing an imperative API and all the primitives.
-- [`@opentui/solid`](packages/solid) - The SolidJS reconciler for OpenTUI.
-- [`@opentui/react`](packages/react) - The React reconciler for OpenTUI.
-- [`@opentui/vue`](packages/vue) - The Vue reconciler (unmaintained)
-- [`@opentui/go`](packages/go) - Go bindings (unmaintained)
+- [`@vybestack/opentui-core`](packages/core) - The core library works completely standalone, providing an imperative API and all the primitives.
+- [`@vybestack/opentui-react`](packages/react) - The React reconciler for OpenTUI.
 
 ## Install
 
@@ -31,7 +31,7 @@ NOTE: You must have [Zig](https://ziglang.org/learn/getting-started/) installed 
 ### TypeScript/JavaScript
 
 ```bash
-bun install @opentui/core
+bun install @vybestack/opentui-core
 ```
 
 ## Try Examples

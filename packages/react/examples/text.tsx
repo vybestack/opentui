@@ -1,4 +1,4 @@
-import { createCliRenderer } from "@opentui/core"
+import { createCliRenderer } from "@vybestack/opentui-core"
 import { createRoot } from "../src"
 
 function App() {

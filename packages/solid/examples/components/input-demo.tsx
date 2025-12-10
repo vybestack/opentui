@@ -1,5 +1,5 @@
-import type { InputRenderable } from "@opentui/core"
-import { usePaste, useRenderer } from "@opentui/solid"
+import type { InputRenderable } from "@vybestack/opentui-core"
+import { usePaste, useRenderer } from "@vybestack/opentui-solid"
 import { createSignal, onMount } from "solid-js"
 
 const InputScene = () => {

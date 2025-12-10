@@ -1,4 +1,4 @@
-import { TextAttributes } from "@opentui/core"
+import { TextAttributes } from "@vybestack/opentui-core"
 import { createSignal, onCleanup, onMount, Show } from "solid-js"
 
 export default function TextStyleScene() {

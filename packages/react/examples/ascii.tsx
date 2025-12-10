@@ -1,5 +1,5 @@
-import { createCliRenderer, type ASCIIFontName } from "@opentui/core"
-import { createRoot } from "@opentui/react"
+import { createCliRenderer, type ASCIIFontName } from "@vybestack/opentui-core"
+import { createRoot } from "@vybestack/opentui-react"
 import { useState } from "react"
 
 export const App = () => {

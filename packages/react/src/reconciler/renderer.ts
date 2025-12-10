@@ -1,4 +1,4 @@
-import { CliRenderer, engine } from "@opentui/core"
+import { CliRenderer, engine } from "@vybestack/opentui-core"
 import React, { type ReactNode } from "react"
 import type { OpaqueRoot } from "react-reconciler"
 import { AppContext } from "../components/app"

@@ -8,7 +8,7 @@ import {
   underline,
   fg,
   type RenderContext,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import { useContext } from "solid-js"
 import { RendererContext } from "../../src/elements/hooks"
 

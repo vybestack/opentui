@@ -11,7 +11,7 @@ import {
   TabSelectRenderable,
   TextareaRenderable,
   TextRenderable,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import type { RenderableConstructor } from "../types/components"
 import {
   BoldSpanRenderable,

@@ -1,5 +1,5 @@
-import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@opentui/core"
-import { extend } from "@opentui/solid"
+import { BoxRenderable, OptimizedBuffer, RGBA, type BoxOptions, type RenderContext } from "@vybestack/opentui-core"
+import { extend } from "@vybestack/opentui-solid"
 
 // Custom renderable that extends BoxRenderable
 class ConsoleButtonRenderable extends BoxRenderable {
@@ -37,7 +37,7 @@ class ConsoleButtonRenderable extends BoxRenderable {
 }
 
 // TypeScript module augmentation for proper typing
-declare module "@opentui/solid" {
+declare module "@vybestack/opentui-solid" {
   interface OpenTUIComponents {
     consoleButton: typeof ConsoleButtonRenderable
   }

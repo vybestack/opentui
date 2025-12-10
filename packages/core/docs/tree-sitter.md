@@ -9,7 +9,7 @@ There are two ways to add custom parsers to your application:
 Use `addDefaultParsers()` to add parsers globally before initializing any clients. This is useful when you want all Tree-Sitter clients in your application to support the same languages.
 
 ```typescript
-import { addDefaultParsers, getTreeSitterClient } from "@opentui/core"
+import { addDefaultParsers, getTreeSitterClient } from "@vybestack/opentui-core"
 
 // Add Python parser globally
 addDefaultParsers([
@@ -36,7 +36,7 @@ const result = await client.highlightOnce(pythonCode, "python")
 Use `client.addFiletypeParser()` to add parsers to a specific client instance. This is useful when different parts of your application need different language support.
 
 ```typescript
-import { TreeSitterClient } from "@opentui/core"
+import { TreeSitterClient } from "@vybestack/opentui-core"
 
 const client = new TreeSitterClient({ dataPath: "./cache" })
 await client.initialize()
@@ -178,7 +178,7 @@ Add the update script to your `package.json`:
 ```json
 {
   "scripts": {
-    "prebuild": "bun node_modules/@opentui/core/lib/tree-sitter/assets/update.ts --config ./parsers-config.json --assets ./src/parsers --output ./src/parsers.ts",
+    "prebuild": "bun node_modules/@vybestack/opentui-core/lib/tree-sitter/assets/update.ts --config ./parsers-config.json --assets ./src/parsers --output ./src/parsers.ts",
     "build": "bun build ./src/index.ts"
   }
 }
@@ -189,7 +189,7 @@ Add the update script to your `package.json`:
 Or call it programmatically in your build script:
 
 ```typescript
-import { updateAssets } from "@opentui/core"
+import { updateAssets } from "@vybestack/opentui-core"
 
 await updateAssets({
   configPath: "./parsers-config.json",
@@ -203,7 +203,7 @@ await updateAssets({
 The script generates a TypeScript file with all parsers pre-configured:
 
 ```typescript
-import { addDefaultParsers, getTreeSitterClient } from "@opentui/core"
+import { addDefaultParsers, getTreeSitterClient } from "@vybestack/opentui-core"
 import { getParsers } from "./parsers" // Generated file
 
 addDefaultParsers(getParsers())
@@ -217,7 +217,7 @@ const result = await client.highlightOnce('def hello():\n    print("world")', "p
 ## Complete Example: Adding Multiple Languages
 
 ```typescript
-import { addDefaultParsers, getTreeSitterClient, SyntaxStyle } from "@opentui/core"
+import { addDefaultParsers, getTreeSitterClient, SyntaxStyle } from "@vybestack/opentui-core"
 
 // Add support for multiple languages before initializing
 addDefaultParsers([
@@ -263,7 +263,7 @@ const goResult = await client.highlightOnce('func main() {\n    fmt.Println("Hel
 The `CodeRenderable` component automatically uses the Tree-Sitter client for syntax highlighting:
 
 ```typescript
-import { CodeRenderable, getTreeSitterClient } from "@opentui/core"
+import { CodeRenderable, getTreeSitterClient } from "@vybestack/opentui-core"
 
 // Initialize the client with custom parsers
 const client = getTreeSitterClient()
@@ -297,7 +297,7 @@ const client = new TreeSitterClient({
 OpenTUI provides utilities to automatically determine filetypes from file paths:
 
 ```typescript
-import { pathToFiletype, extToFiletype } from "@opentui/core"
+import { pathToFiletype, extToFiletype } from "@vybestack/opentui-core"
 
 // Get filetype from file path
 const ft1 = pathToFiletype("src/main.rs") // "rust"

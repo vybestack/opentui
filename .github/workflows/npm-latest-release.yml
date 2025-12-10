@@ -56,8 +56,8 @@ jobs:
 
           # Copy native packages to core's node_modules
           if [ -d "npm-packages/core-native-packages" ]; then
-            mkdir -p packages/core/node_modules/@opentui
-            cp -r npm-packages/core-native-packages/* packages/core/node_modules/@opentui/
+            mkdir -p packages/core/node_modules/@vybestack
+            cp -r npm-packages/core-native-packages/* packages/core/node_modules/@vybestack/
             echo "Copied native packages"
           fi
 
@@ -93,15 +93,15 @@ jobs:
           echo "Packages that would be published:"
           echo ""
 
-          echo "📦 Checking @opentui/core..."
+          echo "📦 Checking @vybestack/opentui-core..."
           cd packages/core/dist && npm pack --dry-run
 
           echo ""
-          echo "📦 Checking @opentui/react..."
+          echo "📦 Checking @vybestack/opentui-react..."
           cd ../../react/dist && npm pack --dry-run
 
           echo ""
-          echo "📦 Checking @opentui/solid..."
+          echo "📦 Checking @vybestack/opentui-solid..."
           cd ../../solid/dist && npm pack --dry-run
 
           echo ""

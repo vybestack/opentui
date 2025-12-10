@@ -1,6 +1,6 @@
 import { createSignal, onMount } from "solid-js"
-import { SyntaxStyle } from "@opentui/core"
-import { useKeyboard } from "@opentui/solid"
+import { SyntaxStyle } from "@vybestack/opentui-core"
+import { useKeyboard } from "@vybestack/opentui-solid"
 
 export default function LineNumberDemo() {
   const [showLineNumbers, setShowLineNumbers] = createSignal(true)

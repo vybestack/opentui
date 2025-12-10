@@ -30,7 +30,7 @@ import type {
   TextRenderable,
   ImageOptions,
   ImageRenderable,
-} from "@opentui/core"
+} from "@vybestack/opentui-core"
 import type React from "react"
 
 // ============================================================================

@@ -1,7 +1,7 @@
 import { describe, test, expect, beforeEach, afterEach } from "bun:test"
 import { testRender } from "../index"
-import { SyntaxStyle } from "@opentui/core"
-import { MockTreeSitterClient } from "@opentui/core/testing"
+import { SyntaxStyle } from "@vybestack/opentui-core"
+import { MockTreeSitterClient } from "@vybestack/opentui-core/testing"
 import { createSignal, Show } from "solid-js"
 
 let testSetup: Awaited<ReturnType<typeof testRender>>

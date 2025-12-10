@@ -1,5 +1,5 @@
-import { createCliRenderer, parseColor, SyntaxStyle } from "@opentui/core"
-import { createRoot, useKeyboard } from "@opentui/react"
+import { createCliRenderer, parseColor, SyntaxStyle } from "@vybestack/opentui-core"
+import { createRoot, useKeyboard } from "@vybestack/opentui-react"
 import { useState, useMemo } from "react"
 
 interface DiffTheme {

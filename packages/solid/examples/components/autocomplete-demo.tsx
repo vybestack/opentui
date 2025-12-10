@@ -1,7 +1,7 @@
-import { type InputRenderable, type BoxRenderable, type KeyEvent, TextAttributes } from "@opentui/core"
+import { type InputRenderable, type BoxRenderable, type KeyEvent, TextAttributes } from "@vybestack/opentui-core"
 import { createSignal, createMemo, For, Show, onMount } from "solid-js"
 import { createStore } from "solid-js/store"
-import { useRenderer } from "@opentui/solid"
+import { useRenderer } from "@vybestack/opentui-solid"
 
 type AutocompleteOption = {
   display: string

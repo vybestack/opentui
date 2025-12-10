@@ -1,9 +1,9 @@
 {
-  "name": "@opentui/core",
-  "description": "OpenTUI is a TypeScript library for building terminal user interfaces (TUIs)",
+  "name": "@vybestack/opentui-core",
+  "description": "OpenTUI is a TypeScript library for building terminal user interfaces (TUIs) - Vybestack fork with terminal image support",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sst/opentui",
+    "url": "https://github.com/vybestack/opentui",
     "directory": "packages/core"
   },
   "types": "src/index.ts",
@@ -47,12 +47,12 @@
     "bun-webgpu": "0.1.4",
     "planck": "^1.4.2",
     "three": "0.177.0",
-    "@opentui/core-darwin-x64": "0.1.60",
-    "@opentui/core-darwin-arm64": "0.1.60",
-    "@opentui/core-linux-x64": "0.1.60",
-    "@opentui/core-linux-arm64": "0.1.60",
-    "@opentui/core-win32-x64": "0.1.60",
-    "@opentui/core-win32-arm64": "0.1.60"
+    "@vybestack/opentui-core-darwin-x64": "0.1.60",
+    "@vybestack/opentui-core-darwin-arm64": "0.1.60",
+    "@vybestack/opentui-core-linux-x64": "0.1.60",
+    "@vybestack/opentui-core-linux-arm64": "0.1.60",
+    "@vybestack/opentui-core-win32-x64": "0.1.60",
+    "@vybestack/opentui-core-win32-arm64": "0.1.60"
   },
   "exports": {
     ".": {

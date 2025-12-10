@@ -20,7 +20,7 @@ import {
 } from "./zig-structs"
 import { isBunfsPath } from "./lib/bunfs"
 
-const module = await import(`@opentui/core-${process.platform}-${process.arch}/index.ts`)
+const module = await import(`@vybestack/opentui-core-${process.platform}-${process.arch}/index.ts`)
 let targetLibPath = module.default
 
 if (isBunfsPath(targetLibPath)) {

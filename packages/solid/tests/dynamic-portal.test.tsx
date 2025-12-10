@@ -1,8 +1,8 @@
 import { describe, expect, it, beforeEach, afterEach } from "bun:test"
 import { testRender, Dynamic, Portal } from "../index"
 import { createSignal, Show } from "solid-js"
-import { createSpy } from "@opentui/core/testing"
-import type { BoxRenderable } from "@opentui/core"
+import { createSpy } from "@vybestack/opentui-core/testing"
+import type { BoxRenderable } from "@vybestack/opentui-core"
 
 let testSetup: Awaited<ReturnType<typeof testRender>>
 

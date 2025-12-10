@@ -1,4 +1,4 @@
-import type { CliRenderer, KeyHandler } from "@opentui/core"
+import type { CliRenderer, KeyHandler } from "@vybestack/opentui-core"
 import { createContext, useContext } from "react"
 
 interface AppContext {
