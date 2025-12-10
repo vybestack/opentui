@@ -106,7 +106,7 @@ class TerminalConsoleCache extends EventEmitter {
         breakLength: 80,
         depth: 2,
       },
-    })
+    }) as unknown as typeof global.console
   }
 
   private overrideConsoleMethods(): void {
