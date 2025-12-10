@@ -59,9 +59,14 @@ const ALL_PACKAGES: PackageConfig[] = [
 // Parse command line arguments
 const args = process.argv.slice(2)
 const includeVue = args.includes("--include-vue")
+const includeSolid = args.includes("--include-solid")
 
-// Filter packages based on flags
-const PACKAGES = includeVue ? ALL_PACKAGES : ALL_PACKAGES.filter((pkg) => pkg.name !== "@vybestack/opentui-vue")
+// Filter packages based on flags - exclude vue and solid by default as they're not in the main build/publish pipeline
+const PACKAGES = ALL_PACKAGES.filter((pkg) => {
+  if (pkg.name === "@vybestack/opentui-vue" && !includeVue) return false
+  if (pkg.name === "@vybestack/opentui-solid" && !includeSolid) return false
+  return true
+})
 
 function setupNpmAuth(): void {
   if (!process.env.NPM_AUTH_TOKEN) {
@@ -268,6 +273,9 @@ function main(): void {
 
   if (!includeVue) {
     console.log("INFO: Skipping @vybestack/opentui-vue (use --include-vue to include)")
+  }
+  if (!includeSolid) {
+    console.log("INFO: Skipping @vybestack/opentui-solid (use --include-solid to include)")
   }
 
   // Setup NPM authentication once
