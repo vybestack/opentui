@@ -3,7 +3,7 @@ import { RGBA } from "../lib/RGBA"
 import { SuperSampleType } from "./WGPURenderer"
 import type { OptimizedBuffer } from "../buffer"
 import { toArrayBuffer } from "bun:ffi"
-import { Jimp } from "jimp"
+import sharp from "sharp"
 
 // @ts-ignore
 import shaderTemplate from "./shaders/supersampling.wgsl" with { type: "text" }
@@ -155,13 +155,13 @@ export class CLICanvas {
       }
     }
 
-    const image = new Jimp({
-      data: Buffer.from(imageData),
-      width: this.width,
-      height: this.height,
-    })
-
-    await image.write(filePath as `${string}.${string}`)
+    await sharp(Buffer.from(imageData), {
+      raw: {
+        width: this.width,
+        height: this.height,
+        channels: 4,
+      },
+    }).toFile(filePath)
     this.screenshotGPUBuffer.unmap()
   }
 

@@ -1,5 +1,5 @@
 import { Color, Texture, DataTexture, NearestFilter, ClampToEdgeWrapping, RGBAFormat, UnsignedByteType } from "three"
-import { Jimp } from "jimp"
+import sharp from "sharp"
 
 interface SimpleImageData {
   data: Uint8ClampedArray
@@ -16,14 +16,16 @@ export class TextureUtils {
   static async loadTextureFromFile(path: string): Promise<DataTexture | null> {
     try {
       const buffer = await Bun.file(path).arrayBuffer()
-      const image = await Jimp.read(buffer)
-
-      image.flip({ horizontal: false, vertical: true })
+      const { data, info } = await sharp(Buffer.from(buffer))
+        .flip()
+        .ensureAlpha()
+        .raw()
+        .toBuffer({ resolveWithObject: true })
 
       const texture = new DataTexture(
-        image.bitmap.data,
-        image.bitmap.width,
-        image.bitmap.height,
+        new Uint8ClampedArray(data.buffer, data.byteOffset, data.byteLength),
+        info.width,
+        info.height,
         RGBAFormat,
         UnsignedByteType,
       )
