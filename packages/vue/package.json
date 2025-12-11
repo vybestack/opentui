@@ -1,6 +1,6 @@
 {
   "name": "@vybestack/opentui-vue",
-  "version": "0.1.25",
+  "version": "0.1.61",
   "description": "Vue renderer for OpenTUI",
   "repository": {
     "type": "git",
