@@ -1853,28 +1853,14 @@ export class CliRenderer extends EventEmitter implements RenderContext {
 
   private async loadImage(src: string | Buffer, width: number, height: number, fit: ImageFit): Promise<Buffer | null> {
     try {
-      const jimpModule: unknown = await import("jimp")
-      const Jimp =
-        (jimpModule as { Jimp?: any }).Jimp ??
-        (jimpModule as { default?: any }).default ??
-        (jimpModule as any)
+      const sharpModule: unknown = await import("sharp")
+      const moduleCandidate = sharpModule as { default?: unknown }
+      const sharp =
+        typeof moduleCandidate.default === "function"
+          ? (moduleCandidate.default as typeof import("sharp"))
+          : (sharpModule as typeof import("sharp"))
       const input = typeof src === "string" ? src : Buffer.from(src)
-      const image = await Jimp.read(input)
-
-      switch (fit) {
-        case "cover":
-          image.cover(width, height)
-          break
-        case "fill":
-          image.resize(width, height)
-          break
-        case "contain":
-        default:
-          image.contain(width, height)
-          break
-      }
-
-      return await image.getBuffer("image/png")
+      return await sharp(input).resize({ width, height, fit }).png().toBuffer()
     } catch (error) {
       console.error("Failed to load image", error)
       return null
