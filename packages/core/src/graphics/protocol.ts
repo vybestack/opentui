@@ -28,7 +28,16 @@ export function detectGraphicsSupport(): GraphicsSupport {
 
 export function encodeItermImage(image: Buffer, widthPx: number, heightPx: number): string {
   const base64 = image.toString("base64")
-  return `\u001b]1337;File=inline=1;width=${widthPx}px;height=${heightPx}px;preserveAspectRatio=1:${base64}\u0007`
+  // We pre-size the image to its target pixel dimensions before emitting the escape sequence.
+  // Setting preserveAspectRatio=0 avoids iTerm2 adding its own letterboxing/padding (which can
+  // show up as black bars when the box aspect ratio differs by even 1px due to rounding).
+  return `\u001b]1337;File=inline=1;width=${widthPx}px;height=${heightPx}px;preserveAspectRatio=0:${base64}\u0007`
+}
+
+export function encodeItermImageCells(image: Buffer, widthCells: number, heightCells: number): string {
+  const base64 = image.toString("base64")
+  // See encodeItermImage() for rationale.
+  return `\u001b]1337;File=inline=1;width=${widthCells};height=${heightCells};preserveAspectRatio=0:${base64}\u0007`
 }
 
 export function encodeKittyImage(id: number, image: Buffer, widthPx: number, heightPx: number): string {

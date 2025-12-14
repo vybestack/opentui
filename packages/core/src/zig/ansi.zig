@@ -17,6 +17,7 @@ pub const ANSI = struct {
     pub const showCursor = "\x1b[?25h";
     pub const defaultCursorStyle = "\x1b[0 q";
     pub const queryPixelSize = "\x1b[14t";
+    pub const queryCellSize = "\x1b[16t";
     pub const nextLine = "\x1b[E";
 
     // Direct writing to any writer - the most efficient option

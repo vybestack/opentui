@@ -7,7 +7,7 @@ import {
   type ViewportBounds,
   type WidthMethod,
 } from "./types"
-import { RGBA, parseColor, type ColorInput } from "./lib/RGBA"
+import { RGBA, parseColor, rgbToHex, type ColorInput } from "./lib/RGBA"
 import type { Pointer } from "bun:ffi"
 import { OptimizedBuffer } from "./buffer"
 import { resolveRenderLib, type RenderLib } from "./zig"
@@ -16,7 +16,7 @@ import { MouseParser, type MouseEventType, type RawMouseEvent, type ScrollInfo }
 import { Selection } from "./lib/selection"
 import {
   detectGraphicsSupport,
-  encodeItermImage,
+  encodeItermImageCells,
   encodeKittyDelete,
   encodeKittyImage,
   type GraphicsSupport,
@@ -36,7 +36,9 @@ import {
 } from "./lib/terminal-palette"
 import {
   isCapabilityResponse,
+  isCellSizeResponse,
   isPixelResolutionResponse,
+  parseCellSize,
   parsePixelResolution,
 } from "./lib/terminal-capability-detection"
 import { ImageRenderable, type ImageFit } from "./renderables/Image"
@@ -72,6 +74,13 @@ registerEnvVar({
 registerEnvVar({
   name: "OTUI_DEBUG",
   description: "Enable debug mode to capture all raw input for debugging purposes.",
+  type: "boolean",
+  default: false,
+})
+
+registerEnvVar({
+  name: "OTUI_IMAGE_TRACE",
+  description: "Emit JSON image render/flush diagnostics to stderr.",
   type: "boolean",
   default: false,
 })
@@ -299,6 +308,7 @@ export class CliRenderer extends EventEmitter implements RenderContext {
   private postProcessFns: ((buffer: OptimizedBuffer, deltaTime: number) => void)[] = []
   private backgroundColor: RGBA = RGBA.fromInts(0, 0, 0, 0)
   private waitingForPixelResolution: boolean = false
+  private cellPixelSize: PixelResolution | null = null
 
   private rendering: boolean = false
   private renderingNative: boolean = false
@@ -399,11 +409,16 @@ export class CliRenderer extends EventEmitter implements RenderContext {
       srcKey: string
       x: number
       y: number
+      cursorX: number
+      cursorY: number
+      offsetX: number
+      offsetY: number
       width: number
       height: number
       fit: ImageFit
       pixelWidth?: number
       pixelHeight?: number
+      backgroundColor?: string // Store as hex string for comparison
       data: Buffer
       kittyId?: number
     }
@@ -991,6 +1006,22 @@ export class CliRenderer extends EventEmitter implements RenderContext {
     }
 
     this.addInputHandler((sequence: string) => {
+      if (isCellSizeResponse(sequence)) {
+        const cellSize = parseCellSize(sequence)
+        if (cellSize) {
+          this.cellPixelSize = cellSize
+          this._capabilities = { ...(this._capabilities ?? {}), cellPixelSize: cellSize }
+          this.cellMetrics = null
+          this.waitingForPixelResolution = false
+          this.requestRender()
+          this.emit("pixelResolution", cellSize)
+          this.logDebug(`cellPixelSize response: ${JSON.stringify(cellSize)}`)
+          return true
+        }
+        this.logDebug(`cellPixelSize parse failed for sequence: ${JSON.stringify(sequence)}`)
+        return false
+      }
+
       if (isPixelResolutionResponse(sequence)) {
         const resolution = parsePixelResolution(sequence)
         if (resolution) {
@@ -1261,6 +1292,9 @@ export class CliRenderer extends EventEmitter implements RenderContext {
   private queryPixelResolution() {
     this.waitingForPixelResolution = true
     this.lib.queryPixelResolution(this.rendererPtr)
+    // Query per-cell pixel size (CSI 16 t). Many terminals support this and it avoids rounding
+    // errors from dividing window pixel size by rows/cols.
+    this.writeOut("\x1b[16t")
   }
 
   private processResize(width: number, height: number): void {
@@ -1735,6 +1769,10 @@ export class CliRenderer extends EventEmitter implements RenderContext {
 
   public getCellMetrics(): CellMetrics | null {
     if (this.cellMetrics) return this.cellMetrics
+    if (this.cellPixelSize) {
+      this.cellMetrics = { pxPerCellX: this.cellPixelSize.width, pxPerCellY: this.cellPixelSize.height }
+      return this.cellMetrics
+    }
     const cols = this.width
     const rows = this.height
     const pixelRes = (this._capabilities?.pixelResolution as PixelResolution | undefined) ?? this._resolution
@@ -1754,18 +1792,28 @@ export class CliRenderer extends EventEmitter implements RenderContext {
     const seen: Set<number> = new Set()
     for (const { renderable, x, y } of images) {
       if (!renderable.src || !renderable.visible) continue
-      if ((renderable.pixelWidth !== undefined || renderable.pixelHeight !== undefined) && !metrics) {
-        continue
-      }
+
       const width = Math.max(renderable.width, 1)
       const height = Math.max(renderable.height, 1)
+
+      // Always render an image that fills the layout box (in cells).
+      //
+      // The terminal protocols ultimately position images on the cell grid; if the transmitted pixel size
+      // doesn't match the cell box, iTerm2 in particular can leave "ghost" pixels because we can't
+      // sub-cell offset images. We therefore compute a target pixel size from the *layout box* and resize
+      // to that size (with fit controlling how the source is mapped into the box).
+      //
+      // If we don't have real cell metrics yet, use conservative fallbacks so the image is at least stable.
+      const pxPerCellX = metrics?.pxPerCellX ?? 9
+      const pxPerCellY = metrics?.pxPerCellY ?? 20
+      const pixelWidth = Math.max(1, Math.round(width * pxPerCellX))
+      const pixelHeight = Math.max(1, Math.round(height * pxPerCellY))
+
       const srcKey = typeof renderable.src === "string" ? renderable.src : renderable.src.toString("base64")
       const previous = this.imageCache.get(renderable.num)
       let data: Buffer | null = previous?.data ?? null
-      const pixelWidth =
-        renderable.pixelWidth ?? (metrics ? Math.max(1, Math.round(width * metrics.pxPerCellX)) : Math.max(1, width))
-      const pixelHeight =
-        renderable.pixelHeight ?? (metrics ? Math.max(1, Math.round(height * metrics.pxPerCellY)) : Math.max(1, height))
+
+      const bgColorHex = rgbToHex(renderable.backgroundColor)
       const changedImage =
         !data ||
         previous?.srcKey !== srcKey ||
@@ -1773,32 +1821,80 @@ export class CliRenderer extends EventEmitter implements RenderContext {
         previous?.height !== height ||
         previous?.fit !== renderable.fit ||
         previous?.pixelWidth !== pixelWidth ||
-        previous?.pixelHeight !== pixelHeight
-      if (changedImage) {
-        data = await this.loadImage(renderable.src, pixelWidth, pixelHeight, renderable.fit)
+        previous?.pixelHeight !== pixelHeight ||
+        previous?.backgroundColor !== bgColorHex
+
+      if (env.OTUI_DEBUG) {
+        this.logDebug(`[Image] render check: id=${renderable.id} pos=${x},${y} cells=${width}x${height} pixels=${pixelWidth}x${pixelHeight} changed=${changedImage}`)
+        if (previous) {
+          this.logDebug(`[Image] previous: pos=${previous.x},${previous.y} cells=${previous.width}x${previous.height} pixels=${previous.pixelWidth}x${previous.pixelHeight}`)
+        }
       }
+
+      if (changedImage) {
+        const result = await this.loadImage(renderable.src, pixelWidth, pixelHeight, renderable.fit, renderable.backgroundColor)
+        if (!result) continue
+        data = result.buffer
+        // Provide intrinsic metadata for aspect-ratio-driven layout, even when explicit sizing is used.
+        renderable.setIntrinsicPixelSize(result.intrinsicWidth, result.intrinsicHeight)
+      }
+
       if (!data) continue
+
       let kittyId = previous?.kittyId
       if (this._graphicsSupport.protocol === "kitty") {
         if (kittyId === undefined) {
           kittyId = this.kittyImageId++
         }
       }
-      const positionChanged = !previous || previous.x !== x || previous.y !== y
+
+      const cursorX = x
+      const cursorY = y
+
+      const positionChanged = !previous || previous.cursorX !== cursorX || previous.cursorY !== cursorY
       const needsSend = changedImage || positionChanged
+
+      if (env.OTUI_IMAGE_TRACE) {
+        const trace = {
+          frame: this.renderStats.frameCount,
+          protocol: this._graphicsSupport.protocol,
+          id: renderable.id,
+          num: renderable.num,
+          layout: { x, y, width, height },
+          pixel: { width: pixelWidth, height: pixelHeight },
+          metrics: metrics ? { pxPerCellX: metrics.pxPerCellX, pxPerCellY: metrics.pxPerCellY } : null,
+          cursor: { x: cursorX, y: cursorY },
+          changedImage,
+          positionChanged,
+          needsSend,
+          fit: renderable.fit,
+          backgroundColor: bgColorHex,
+        }
+        process.stderr.write(`OTUI_IMAGE_TRACE:${JSON.stringify(trace)}\n`)
+      }
+
       if (needsSend && previous?.kittyId !== undefined && this._graphicsSupport.protocol === "kitty") {
         this.writeOut(encodeKittyDelete(previous.kittyId))
+      }
+
+      if (needsSend && this._graphicsSupport.protocol === "iterm2" && previous) {
+        this.eraseItermInlineImage(previous.cursorX, previous.cursorY, previous.width, previous.height, previous.backgroundColor)
       }
 
       this.imageCache.set(renderable.num, {
         srcKey,
         x,
         y,
+        cursorX,
+        cursorY,
+        offsetX: 0,
+        offsetY: 0,
         width,
         height,
         fit: renderable.fit,
         pixelWidth,
         pixelHeight,
+        backgroundColor: bgColorHex,
         data,
         kittyId,
       })
@@ -1807,18 +1903,9 @@ export class CliRenderer extends EventEmitter implements RenderContext {
         continue
       }
 
-      let offsetX = 0
-      let offsetY = 0
-      if (metrics) {
-        const layoutPxWidth = width * metrics.pxPerCellX
-        const layoutPxHeight = height * metrics.pxPerCellY
-        offsetX = Math.max(0, Math.round((layoutPxWidth - pixelWidth) / (2 * metrics.pxPerCellX)))
-        offsetY = Math.max(0, Math.round((layoutPxHeight - pixelHeight) / (2 * metrics.pxPerCellY)))
-      }
-
-      const move = `\u001b[${y + offsetY + 1};${x + offsetX + 1}H`
+      const move = `\u001b[${cursorY + 1};${cursorX + 1}H`
       if (this._graphicsSupport.protocol === "iterm2") {
-        this.writeOut(move + encodeItermImage(data, pixelWidth, pixelHeight))
+        this.writeOut(move + encodeItermImageCells(data, width, height))
       } else if (this._graphicsSupport.protocol === "kitty") {
         this.writeOut(move + encodeKittyImage(kittyId ?? this.kittyImageId++, data, pixelWidth, pixelHeight))
       }
@@ -1831,8 +1918,34 @@ export class CliRenderer extends EventEmitter implements RenderContext {
         if (cached?.kittyId !== undefined && this._graphicsSupport.protocol === "kitty") {
           this.writeOut(encodeKittyDelete(cached.kittyId))
         }
+        if (cached && this._graphicsSupport.protocol === "iterm2") {
+          this.eraseItermInlineImage(cached.cursorX, cached.cursorY, cached.width, cached.height, cached.backgroundColor)
+        }
         this.imageCache.delete(key)
       }
+    }
+  }
+
+  private eraseItermInlineImage(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    backgroundColorHex?: string,
+  ): void {
+    const maxWidth = Math.max(0, Math.min(width, this.width - x))
+    const maxHeight = Math.max(0, Math.min(height, this.height - y))
+    if (maxWidth === 0 || maxHeight === 0) return
+
+    const bg = backgroundColorHex ? RGBA.fromHex(backgroundColorHex) : null
+    const bgSeq = bg && bg.a > 0 ? `\u001b[48;2;${bg.toInts()[0]};${bg.toInts()[1]};${bg.toInts()[2]}m` : "\u001b[49m"
+    const reset = "\u001b[0m"
+    const row = " ".repeat(maxWidth)
+
+    // Clearing is intentionally conservative and only runs on iTerm2 when an image is re-sent or removed.
+    // This prevents "ghost" image artifacts because iTerm2 inline images don't support delete-by-id.
+    for (let dy = 0; dy < maxHeight; dy++) {
+      this.writeOut(`\u001b[${y + dy + 1};${x + 1}H${reset}${bgSeq}${row}${reset}`)
     }
   }
 
@@ -1851,7 +1964,13 @@ export class CliRenderer extends EventEmitter implements RenderContext {
     return out
   }
 
-  private async loadImage(src: string | Buffer, width: number, height: number, fit: ImageFit): Promise<Buffer | null> {
+  private async loadImage(
+    src: string | Buffer,
+    width: number,
+    height: number,
+    fit: ImageFit,
+    backgroundColor?: RGBA,
+  ): Promise<{ buffer: Buffer; intrinsicWidth: number; intrinsicHeight: number } | null> {
     try {
       const sharpModule: unknown = await import("sharp")
       const moduleCandidate = sharpModule as { default?: unknown }
@@ -1860,7 +1979,35 @@ export class CliRenderer extends EventEmitter implements RenderContext {
           ? (moduleCandidate.default as typeof import("sharp"))
           : (sharpModule as typeof import("sharp"))
       const input = typeof src === "string" ? src : Buffer.from(src)
-      return await sharp(input).resize({ width, height, fit }).png().toBuffer()
+      const sharpInstance = sharp(input)
+
+      // Get intrinsic metadata
+      const metadata = await sharpInstance.metadata()
+      const intrinsicWidth = metadata.width ?? width
+      const intrinsicHeight = metadata.height ?? height
+
+      // Resize and convert to PNG.
+      //
+      // iTerm2 and kitty both support PNG alpha, and we already paint the layout box background via
+      // the normal buffer renderer (see ImageRenderable.renderSelf). To behave like an HTML <img>,
+      // any padding introduced by `fit: "contain"` should remain transparent so the underlying
+      // terminal background shows through.
+      //
+      // We still propagate the RGB channels from `backgroundColor` (when provided) into fully
+      // transparent padding to reduce dark fringing when downscaling images with alpha.
+      const resizeOptions: { width: number; height: number; fit: ImageFit; background: { r: number; g: number; b: number; alpha: number } } = {
+        width,
+        height,
+        fit,
+        background: { r: 0, g: 0, b: 0, alpha: 0 },
+      }
+      if (backgroundColor) {
+        const [r, g, b] = backgroundColor.toInts()
+        resizeOptions.background = { r, g, b, alpha: 0 }
+      }
+      const buffer = await sharpInstance.ensureAlpha().resize(resizeOptions).png().toBuffer()
+
+      return { buffer, intrinsicWidth, intrinsicHeight }
     } catch (error) {
       console.error("Failed to load image", error)
       return null

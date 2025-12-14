@@ -1,6 +1,6 @@
 {
   "name": "@vybestack/opentui-react",
-  "version": "0.1.61",
+  "version": "0.1.62",
   "description": "React renderer for building terminal user interfaces using OpenTUI core - Vybestack fork with terminal image support",
   "license": "MIT",
   "repository": {

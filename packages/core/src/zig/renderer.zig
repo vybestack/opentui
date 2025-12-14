@@ -904,6 +904,7 @@ pub const CliRenderer = struct {
         const writer = bufferedWriter.writer();
 
         writer.writeAll(ansi.ANSI.queryPixelSize) catch {};
+        writer.writeAll(ansi.ANSI.queryCellSize) catch {};
 
         bufferedWriter.flush() catch {};
     }

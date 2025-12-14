@@ -9,6 +9,7 @@
  * - Kitty Keyboard Query: ESC[?Nu where N is 0,1,2,etc
  * - DA1 (Device Attributes): ESC[?...c
  * - Pixel Resolution: ESC[4;height;widtht
+ * - Cell Size: ESC[6;height;widtht
  */
 
 /**
@@ -64,11 +65,34 @@ export function isPixelResolutionResponse(sequence: string): boolean {
 }
 
 /**
+ * Check if a sequence is a cell size response.
+ * Format: ESC[6;height;widtht
+ */
+export function isCellSizeResponse(sequence: string): boolean {
+  return /\x1b\[6;\d+;\d+t/.test(sequence)
+}
+
+/**
  * Parse pixel resolution from response sequence.
  * Returns { width, height } or null if not a valid resolution response.
  */
 export function parsePixelResolution(sequence: string): { width: number; height: number } | null {
   const match = sequence.match(/\x1b\[4;(\d+);(\d+)t/)
+  if (match) {
+    return {
+      width: parseInt(match[2]),
+      height: parseInt(match[1]),
+    }
+  }
+  return null
+}
+
+/**
+ * Parse cell size (in pixels) from response sequence.
+ * Returns { width, height } or null if not a valid cell size response.
+ */
+export function parseCellSize(sequence: string): { width: number; height: number } | null {
+  const match = sequence.match(/\x1b\[6;(\d+);(\d+)t/)
   if (match) {
     return {
       width: parseInt(match[2]),
